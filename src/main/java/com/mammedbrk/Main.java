@@ -1,7 +1,9 @@
 package com.mammedbrk;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,13 +31,12 @@ public class Main {
 
         System.out.println(list.remove(list.get(4)));
 
-        List<User> newList = new LinkedList<>();
+        List<User> newList = new ArrayList<>();
         newList.add(new User("mohammadreza", 39));
         newList.add(new User("pejman", 43));
         newList.add(new User("abdolhamid", 57));
 
         list.addAll(newList);
-
 
         /*List<Integer> list = new LinkedList<>();
         list.add(null);

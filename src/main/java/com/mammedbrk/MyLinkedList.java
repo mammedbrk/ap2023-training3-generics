@@ -1,6 +1,9 @@
 package com.mammedbrk;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 public class MyLinkedList<E> {
     int size = 0;
@@ -136,6 +139,18 @@ public class MyLinkedList<E> {
         }
     }
 
+    // Return ListIterator
+    public ListIterator<E> listIterator(int index) {
+        if (invalidIndex(index))
+            return null;
+        return new MyListIterator(index);
+    }
+
+    // Return Iterator
+    public Iterator<E> iterator() {
+        return new MyListIterator(0);
+    }
+
 
     private static class Node<E> {
         E value;
@@ -146,6 +161,71 @@ public class MyLinkedList<E> {
             this.value = value;
             this.prev = prev;
             this.next = next;
+        }
+    }
+
+    private class MyListIterator implements ListIterator<E> {
+        private Node<E> next;
+        private int nextIndex;
+
+        public MyListIterator(int nextIndex) {
+            this.next = node(nextIndex);
+            this.nextIndex = nextIndex;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nextIndex < size;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext())
+                return null;
+            Node<E> returnNode = next;
+            next = next.next;
+            nextIndex++;
+            return returnNode.value;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return nextIndex > 0;
+        }
+
+        @Override
+        public E previous() {
+            if (!hasPrevious())
+                return null;
+            if (next == null)
+                next = last;
+            else
+                next = next.prev;
+            nextIndex--;
+            return next.value;
+        }
+
+        @Override
+        public int nextIndex() {
+            return nextIndex;
+        }
+
+        @Override
+        public int previousIndex() {
+            return nextIndex - 1;
+        }
+
+        @Override
+        public void remove() {
+
+        }
+
+        @Override
+        public void set(E e) {
+        }
+
+        @Override
+        public void add(E e) {
         }
     }
 }
