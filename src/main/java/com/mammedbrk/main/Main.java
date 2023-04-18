@@ -1,4 +1,6 @@
-package com.mammedbrk;
+package com.mammedbrk.main;
+
+import com.mammedbrk.mylinkedlist.MyLinkedList;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -85,9 +87,7 @@ public class Main {
         list.removeIf(new Predicate<String>() {
             @Override
             public boolean test(String s) {
-                if (s == null)
-                    return true;
-                return false;
+                return s == null;
             }
         });
 

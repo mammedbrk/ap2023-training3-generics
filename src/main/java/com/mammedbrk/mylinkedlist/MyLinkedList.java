@@ -1,4 +1,4 @@
-package com.mammedbrk;
+package com.mammedbrk.mylinkedlist;
 
 import java.util.*;
 import java.util.function.Predicate;
