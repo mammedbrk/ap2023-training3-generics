@@ -75,8 +75,9 @@ public class Main {
         System.out.println("#");
 
         // sort
-
-
+        list.sort(Comparator.naturalOrder());
+        for (String s: list)
+            System.out.println(s);
 
         // removeIf
     }

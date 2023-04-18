@@ -1,9 +1,6 @@
 package com.mammedbrk;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyLinkedList<E> implements Iterable<E> {
     int size = 0;
@@ -166,6 +163,19 @@ public class MyLinkedList<E> implements Iterable<E> {
         return new MyListIterator(0);
     }
 
+    public void sort(Comparator<? super E> comparator) {
+        Object[] array = new Object[size];
+        int index = 0;
+        for (Node<E> node = first; node != null; node = node.next) {
+            array[index++] = node.value;
+        }
+        Arrays.sort(array, (Comparator) comparator);
+        ListIterator<E> i = this.listIterator(0);
+        for (Object o : array) {
+            i.set((E) o);
+            i.next();
+        }
+    }
 
     private static class Node<E> {
         E value;
@@ -238,8 +248,7 @@ public class MyLinkedList<E> implements Iterable<E> {
 
         @Override
         public void set(E e) {
-            remove();
-            add(e);
+            next.value = e;
         }
 
         @Override
