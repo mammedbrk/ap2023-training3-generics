@@ -1,6 +1,7 @@
 package com.mammedbrk;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,8 +16,11 @@ public class Main {
         // add
         list.add(d);
         list.add(a);
+        list.add(null);
         list.add(1, b);
         list.add(0, c);
+        list.add(null);
+        list.add(1, null);
 
         // foreach
         for (String s: list)
@@ -25,6 +29,7 @@ public class Main {
 
         // remove
         list.remove(a);
+        list.remove(null);
         list.remove(1);
 
         // iterator
@@ -39,15 +44,15 @@ public class Main {
         System.out.println("#");
 
         // get
-        System.out.println(list.get(2));
+        System.out.println(list.get(4));
         System.out.println(list.get(0));
         System.out.println("#");
 
         // addAll
         List<String> collection = new ArrayList<>();
-        collection.add("q");
+        collection.add("bq");
         collection.add("w");
-        collection.add("e");
+        collection.add("be");
         collection.add("r");
         list.addAll(collection);
 
@@ -62,23 +67,39 @@ public class Main {
         System.out.println("-");
         listIterator.next();
         listIterator.next();
-        listIterator.add("p");
+        listIterator.add("bp");
+        listIterator.previous();
         listIterator.previous();
         listIterator.remove();
-        listIterator.set("l");
+        listIterator.set("bl");
         list.forEach(System.out::println);
         System.out.println("#");
 
         // contains
         System.out.println(list.contains("y"));
-        System.out.println(list.contains("q"));
+        System.out.println(list.contains("bl"));
+        System.out.println(list.contains(null));
+        System.out.println("#");
+
+        // removeIf
+        list.removeIf(new Predicate<String>() {
+            @Override
+            public boolean test(String s) {
+                if (s == null)
+                    return true;
+                return false;
+            }
+        });
+
+        for (String s: list)
+            System.out.println(s);
         System.out.println("#");
 
         // sort
         list.sort(Comparator.naturalOrder());
         for (String s: list)
             System.out.println(s);
+        System.out.println("#");
 
-        // removeIf
     }
 }

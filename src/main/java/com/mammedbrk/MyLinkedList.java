@@ -1,6 +1,7 @@
 package com.mammedbrk;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class MyLinkedList<E> implements Iterable<E> {
     int size = 0;
@@ -94,7 +95,7 @@ public class MyLinkedList<E> implements Iterable<E> {
         }
         else {
             for (Node<E> node = first; node != null; node = node.next) {
-                if (node.value.equals(e)) {
+                if (node.value != null && node.value.equals(e)) {
                     unlink(node);
                     return true;
                 }
@@ -136,7 +137,7 @@ public class MyLinkedList<E> implements Iterable<E> {
         }
         else {
             for (Node<E> node = first; node != null; node = node.next) {
-                if (node.value.equals(e)) {
+                if (node.value != null && node.value.equals(e)) {
                     return true;
                 }
             }
@@ -174,6 +175,15 @@ public class MyLinkedList<E> implements Iterable<E> {
         for (Object o : array) {
             i.set((E) o);
             i.next();
+        }
+    }
+
+    public void removeIf(Predicate<E> p) {
+        ListIterator listIterator = listIterator(0);
+        while (listIterator.hasNext()) {
+            if (p.test((E) listIterator.next())) {
+                listIterator.remove();
+            }
         }
     }
 
@@ -243,7 +253,15 @@ public class MyLinkedList<E> implements Iterable<E> {
 
         @Override
         public void remove() {
-            MyLinkedList.this.remove(nextIndex);
+            if (current == null)
+                return;
+            Node<E> lastNext = current.next;
+            unlink(current);
+            if (next == current)
+                next = lastNext;
+            else
+                nextIndex--;
+            current = null;
         }
 
         @Override
