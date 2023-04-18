@@ -1,57 +1,83 @@
 package com.mammedbrk;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Predicate;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        MyLinkedList<User> list = new MyLinkedList<>();
-        User akbar = new User("akbar", 40);
-        list.add(akbar);
-        list.add(new User("mohsen", 46));
-        list.add(new User("morteza", 50));
-        list.add(new User("gholamreza", 48));
+        MyLinkedList<String> list = new MyLinkedList<>();
 
+        String a = "a";
+        String b = "b";
+        String c = "c";
+        String d = "d";
+
+        // add
+        list.add(d);
+        list.add(a);
+        list.add(1, b);
+        list.add(0, c);
+
+        // foreach
+        for (String s: list)
+            System.out.println(s);
+        System.out.println("#");
+
+        // remove
+        list.remove(a);
+        list.remove(1);
+
+        // iterator
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+        System.out.println("#");
+
+        // size
         System.out.println(list.size());
+        System.out.println("#");
 
-        System.out.println(list.remove(akbar));
+        // get
+        System.out.println(list.get(2));
+        System.out.println(list.get(0));
+        System.out.println("#");
 
-        System.out.println(list.contains(akbar));
+        // addAll
+        List<String> collection = new ArrayList<>();
+        collection.add("q");
+        collection.add("w");
+        collection.add("e");
+        collection.add("r");
+        list.addAll(collection);
 
-        System.out.println(list.remove(12));
+        // listIterator
+        ListIterator<String> listIterator = list.listIterator(list.size());
+        while (listIterator.hasPrevious()) {
+            System.out.println(listIterator.previous());
+        }
+        System.out.println("-");
+        System.out.println(list.get(listIterator.nextIndex()));
+        System.out.println(list.get(listIterator.previousIndex()));
+        System.out.println("-");
+        listIterator.next();
+        listIterator.next();
+        listIterator.add("p");
+        listIterator.previous();
+        listIterator.remove();
+        listIterator.set("l");
+        list.forEach(System.out::println);
+        System.out.println("#");
 
-        System.out.println(list.get(9));
+        // contains
+        System.out.println(list.contains("y"));
+        System.out.println(list.contains("q"));
+        System.out.println("#");
 
-        list.add(2, new User("abbas", 47));
+        // sort
 
-        System.out.println(list.get(2).getName());
 
-        System.out.println(list.remove(list.get(4)));
 
-        List<User> newList = new ArrayList<>();
-        newList.add(new User("mohammadreza", 39));
-        newList.add(new User("pejman", 43));
-        newList.add(new User("abdolhamid", 57));
-
-        list.addAll(newList);
-
-        /*List<Integer> list = new LinkedList<>();
-        list.add(null);
-        System.out.println(list.contains(null));*/
-
-        /*User user = null;
-        System.out.println(user == null);*/
-        
-        /*User user = new User("akbar", 40);
-
-        User user2 = user;
-
-        user = new User("mohsen", 46);
-
-        System.out.println(user2.getName());
-        System.out.println(user.getName());*/
+        // removeIf
     }
 }

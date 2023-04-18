@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-public class MyLinkedList<E> {
+public class MyLinkedList<E> implements Iterable<E> {
     int size = 0;
     Node<E> first;
     Node<E> last;
@@ -28,10 +28,19 @@ public class MyLinkedList<E> {
         Node<E> prevNode = node.prev;
         Node<E> nextNode = node.next;
 
-        if (prevNode != null)
+        if (prevNode != null) {
             prevNode.next = nextNode;
-        if (nextNode != null)
+        }
+        else {
+            first = nextNode;
+        }
+        if (nextNode != null) {
             nextNode.prev = prevNode;
+        }
+        else {
+            last = prevNode;
+        }
+        size--;
     }
 
     // Add object to end of the list
@@ -56,7 +65,7 @@ public class MyLinkedList<E> {
         else {
             Node<E> newNode = new Node<>(e, null, null);
             Node<E> nextNode = node(index);
-            Node<E> prevNode = nextNode.prev;
+            Node<E> prevNode = (nextNode == null)? null: nextNode.prev;
 
             if (prevNode == null)
                 first = newNode;
@@ -64,8 +73,14 @@ public class MyLinkedList<E> {
                 newNode.prev = prevNode;
                 prevNode.next = newNode;
             }
-            nextNode.prev = newNode;
-            newNode.next = nextNode;
+            if (nextNode == null) {
+                last = newNode;
+            }
+            else {
+                nextNode.prev = newNode;
+                newNode.next = nextNode;
+            }
+            size++;
         }
         return true;
     }
@@ -165,6 +180,7 @@ public class MyLinkedList<E> {
     }
 
     private class MyListIterator implements ListIterator<E> {
+        private Node<E> current;
         private Node<E> next;
         private int nextIndex;
 
@@ -182,10 +198,10 @@ public class MyLinkedList<E> {
         public E next() {
             if (!hasNext())
                 return null;
-            Node<E> returnNode = next;
+            current = next;
             next = next.next;
             nextIndex++;
-            return returnNode.value;
+            return current.value;
         }
 
         @Override
@@ -198,11 +214,11 @@ public class MyLinkedList<E> {
             if (!hasPrevious())
                 return null;
             if (next == null)
-                next = last;
+                current = next = last;
             else
-                next = next.prev;
+                current = next = next.prev;
             nextIndex--;
-            return next.value;
+            return current.value;
         }
 
         @Override
@@ -217,15 +233,18 @@ public class MyLinkedList<E> {
 
         @Override
         public void remove() {
-
+            MyLinkedList.this.remove(nextIndex);
         }
 
         @Override
         public void set(E e) {
+            remove();
+            add(e);
         }
 
         @Override
         public void add(E e) {
+            MyLinkedList.this.add(nextIndex, e);
         }
     }
 }
